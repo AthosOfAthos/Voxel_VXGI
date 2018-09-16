@@ -1,0 +1,16 @@
+{
+	"FileVersion": 3,
+	"EngineAssociation": "{B43A242E-4647-7360-192F-08AF29ADB521}",
+	"Category": "",
+	"Description": "",
+	"Modules": [
+		{
+			"Name": "Voxel_VXGI",
+			"Type": "Runtime",
+			"LoadingPhase": "Default",
+			"AdditionalDependencies": [
+				"Engine"
+			]
+		}
+	]
+}
