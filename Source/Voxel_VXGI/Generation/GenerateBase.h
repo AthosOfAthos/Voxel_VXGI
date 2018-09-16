@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "Math/FastNoise.h"
+#include "Biome.h"
 #include "Voxel/Voxel_Voxel.h"
 
 class VOXEL_VXGI_API GenerateBase
@@ -15,4 +16,5 @@ public:
 
 	int seed;
 	FastNoise simpleNoise;
+	Biome biome = Biome(1);
 };
