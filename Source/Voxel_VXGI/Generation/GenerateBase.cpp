@@ -23,23 +23,23 @@ Voxel_Voxel* GenerateBase::Gen(FIntVector worldPos)
 	Then based on the biome it calls a new biome class with the information
 	*/
 	int b = biome.getBiome(worldPos);
-	float height;
-	height = simpleNoise.GetSimplex(worldPos.X, worldPos.Y);
 	switch (b) {
 		case 1:
 			return plain.Block(worldPos);
 			break;
 		case 2:
 			return mountain.Block(worldPos);
-			height = 10;
+			break;
+		case 3:
+			return swamp.Block(worldPos);
+			break;
+		case 4:
+			return desert.Block(worldPos);
 			break;
 		default:
 			return nullptr;
-			height = 0;
 			break;
 	}
-	if (worldPos.Z <= height)
-		return new Voxel_Stone();
 
 	return nullptr;
 }

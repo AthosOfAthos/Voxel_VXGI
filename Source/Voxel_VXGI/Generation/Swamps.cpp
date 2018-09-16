@@ -1,21 +1,22 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "Mountains.h"
+#include "Swamps.h"
 
-Mountains::Mountains()
+Swamps::Swamps()
 {
 	ground = FastNoise();
 	ground.SetSeed(1337);
-	ground.SetFrequency(0.03);
+	ground.SetFrequency(0.1);
 }
 
-Mountains::~Mountains()
+Swamps::~Swamps()
 {
 }
 
-Voxel_Voxel* Mountains::Block(FIntVector pos) {
+Voxel_Voxel* Swamps::Block(FIntVector pos) {
 	float h = ground.GetPerlin(pos.X, pos.Y);
-	h *= 30;
+	h *= 2;
+	h -= 1;
 	if (pos.Z < h) {
 		return new Voxel_Stone();
 	}

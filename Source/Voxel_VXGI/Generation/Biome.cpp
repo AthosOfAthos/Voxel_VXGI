@@ -21,26 +21,27 @@ Biome::~Biome()
 
 int Biome::getBiome(FIntVector pos) 
 {
-	float t = temperature.GetPerlinFractal(pos.X, pos.Y);
-	float r = rainfall.GetPerlinFractal(pos.X, pos.Y);
+	float t = temperature.GetPerlin(pos.X, pos.Y);
+	float r = rainfall.GetPerlin(pos.X, pos.Y);
 	int layer = 20;
-	if (pos.Z > 0) {
+	if (pos.Z > -layer) {
 		//surface biomes
-		if (r > t) {
-			return 2;
+		if (r >0) {
+			if (t > 0) {
+				return 3;//swamp 3
+			}
+			else {
+				return 1;//plains
+			}
 		}
 		else {
-			return 1;
+			if (t > 0) {
+				return 4;//desert
+			}
+			else {
+				return 2;//mountain
+			}
 		}
-	}
-	else if (pos.Z > -layer) {
-		if (r > t) {
-			return 2;
-		}
-		else {
-			return 1;
-		}
-
 	}
 	else if (pos.Z > -2* layer) {
 		//layer 2
