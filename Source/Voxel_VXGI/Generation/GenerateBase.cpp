@@ -27,17 +27,14 @@ Voxel_Voxel* GenerateBase::Gen(FIntVector worldPos)
 	height = simpleNoise.GetSimplex(worldPos.X, worldPos.Y);
 	switch (b) {
 		case 1:
-			//biome = b1;
-			//really this should say
-			//return b1.generate(worldPos);
-			//where b1.generate returns a voxel
-			height = 5;
+			return plain.Block(worldPos);
 			break;
 		case 2:
-			//biome = b2;
+			return mountain.Block(worldPos);
 			height = 10;
 			break;
 		default:
+			return nullptr;
 			height = 0;
 			break;
 	}

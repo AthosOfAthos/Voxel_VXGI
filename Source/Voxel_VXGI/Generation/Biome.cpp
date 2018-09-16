@@ -7,10 +7,12 @@ Biome::Biome(int seed)
 	//Shouldset seeds
 	temperature = FastNoise();
 	temperature.SetSeed(seed);
+	temperature.SetFrequency(0.001);
 
 
 	rainfall = FastNoise();
 	rainfall.SetSeed(seed+1);
+	rainfall.SetFrequency(0.001);
 }
 
 Biome::~Biome()
@@ -32,7 +34,12 @@ int Biome::getBiome(FIntVector pos)
 		}
 	}
 	else if (pos.Z > -layer) {
-		//layer 1
+		if (r > t) {
+			return 2;
+		}
+		else {
+			return 1;
+		}
 
 	}
 	else if (pos.Z > -2* layer) {
