@@ -19,7 +19,11 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
+	virtual void PostLogin(APlayerController*) override;
 	virtual void Tick(float DeltaTime) override;
+public:
+	bool SpawnPlayer(FVector, APlayerController*);
 
 	AWorld_World* gameWorld;
+	TArray<AController_Player*> playerControllers;
 };

@@ -2,6 +2,9 @@
 
 #include "Controller_Player.h"
 
-
+AController_Player::AController_Player()
+{
+	bNeedsPawn = true;
+}
 
 

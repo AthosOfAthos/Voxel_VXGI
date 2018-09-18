@@ -10,8 +10,9 @@ UCLASS()
 class VOXEL_VXGI_API AController_Player : public APlayerController
 {
 	GENERATED_BODY()
+
+public: 
+	AController_Player();
 	
-	
-	
-	
+	bool bNeedsPawn;
 };

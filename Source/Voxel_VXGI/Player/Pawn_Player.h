@@ -2,7 +2,12 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include "Engine.h"
+#include "UnrealNetwork.h"
+#include "App.h"
+#include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "Animation/AnimBlueprint.h"
 #include "GameFramework/Pawn.h"
 #include "Pawn_Player.generated.h"
 
@@ -12,20 +17,33 @@ class VOXEL_VXGI_API APawn_Player : public APawn
 	GENERATED_BODY()
 
 public:
-	// Sets default values for this pawn's properties
 	APawn_Player();
 
 protected:
-	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
-	
+	void MoveY(float);
+	void MoveX(float);
+	void LookY(float);
+	void LookX(float);
+	UFUNCTION(Server, Reliable, WithValidation)
+	void MoveYServer(float input);
+	UFUNCTION(Server, Reliable, WithValidation)
+	void MoveXServer(float input);
+	UFUNCTION(Server, Reliable, WithValidation)
+	void SetRotation(FRotator newPlayerRotation);
+
+	UCapsuleComponent* playerCollision;
+	UCameraComponent* playerCamera;
+
+	FVector playerVelocity;
+	FRotator playerRotation;
+	UPROPERTY(Replicated)
+	FVector playerInput;
+	UPROPERTY(Replicated)
+	FVector playerLocation;
 };

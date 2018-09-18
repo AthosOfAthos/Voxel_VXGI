@@ -38,7 +38,7 @@ void AWorld_World::BeginPlay()
 		{
 			for (int chunkY = -5; chunkY < 5; chunkY++)
 			{
-				for (int chunkZ = -2; chunkZ < 5; chunkZ++)
+				for (int chunkZ = -5; chunkZ < 5; chunkZ++)
 				{
 					LoadChunk(FIntVector(chunkX, chunkY, chunkZ));
 				}
