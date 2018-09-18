@@ -17,9 +17,12 @@ APawn_Player::APawn_Player()
 
 	playerCamera = CreateDefaultSubobject<UCameraComponent>(TEXT("playerCamera"));
 	playerCamera->SetupAttachment(RootComponent);
+	playerCamera->SetRelativeLocation(FVector(0,0,75));
 
 	playerVelocity = FVector(0, 0, 0);
 	playerInput = FVector(0, 0, 0);
+
+	gravityZ = -2000;
 }
 
 void APawn_Player::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
@@ -49,41 +52,26 @@ void APawn_Player::Tick(float DeltaTime)
 		AWorld_World* world = gm->gameWorld;
 
 		FVector rotatedInput = FRotator(0, playerRotation.Yaw, 0).RotateVector(playerInput);
-
 		playerVelocity.X = rotatedInput.X * 500;
 		playerVelocity.Y = rotatedInput.Y * 500;
 
-		FIntVector blockPos;
 		FVector targetLocation = GetActorLocation();
-
 		targetLocation.X += playerVelocity.X * DeltaTime;
-		blockPos.X = FMath::RoundFromZero((float)targetLocation.X / 100);
-		blockPos.Y = FMath::RoundFromZero((float)targetLocation.Y / 100);
-		blockPos.Z = FMath::RoundFromZero((float)targetLocation.Z / 100);
-		if (world->GetBlock(blockPos) != nullptr)
-		{
-			if (!world->GetBlock(blockPos)->bHasCollision)
-				SetActorLocation(targetLocation);
-		}
-		else
-		{
+		if (CheckCollision(targetLocation))
 			SetActorLocation(targetLocation);
-		}
 
 		targetLocation = GetActorLocation();
 		targetLocation.Y += playerVelocity.Y * DeltaTime;
-		blockPos.X = FMath::RoundFromZero((float)targetLocation.X / 100);
-		blockPos.Y = FMath::RoundFromZero((float)targetLocation.Y / 100);
-		blockPos.Z = FMath::RoundFromZero((float)targetLocation.Z / 100);
-		if (world->GetBlock(blockPos) != nullptr)
-		{
-			if (!world->GetBlock(blockPos)->bHasCollision)
-				SetActorLocation(targetLocation);
-		}
-		else
-		{
+		if (CheckCollision(targetLocation))
 			SetActorLocation(targetLocation);
-		}
+
+		targetLocation = GetActorLocation();
+		playerVelocity.Z += gravityZ * DeltaTime;
+		targetLocation.Z += playerVelocity.Z * DeltaTime;
+		if (CheckCollision(targetLocation))
+			SetActorLocation(targetLocation);
+		else
+			playerVelocity.Z = 0;
 		
 		//update location for clients
 		playerLocation = GetActorLocation();
@@ -94,7 +82,7 @@ void APawn_Player::Tick(float DeltaTime)
 		SetRotation(playerRotation);
 		playerCamera->SetWorldRotation(playerRotation);
 		//smooth movement
-		FVector targetLocation = FMath::VInterpTo(GetActorLocation(), playerLocation, DeltaTime, 10);
+		FVector targetLocation = FMath::VInterpTo(GetActorLocation(), playerLocation, DeltaTime, 15);
 		SetActorLocation(targetLocation);
 	}
 }
@@ -106,6 +94,92 @@ void APawn_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 	PlayerInputComponent->BindAxis("MoveX", this, &APawn_Player::MoveX);
 	PlayerInputComponent->BindAxis("LookY", this, &APawn_Player::LookY);
 	PlayerInputComponent->BindAxis("LookX", this, &APawn_Player::LookX);
+
+	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &APawn_Player::JumpPressed);
+	PlayerInputComponent->BindAction("Jump", IE_Released, this, &APawn_Player::JumpReleased);
+}
+
+bool APawn_Player::CheckCollision(FVector location)
+{
+	AVoxel_VXGIGameModeBase* gm = (AVoxel_VXGIGameModeBase*)GetWorld()->GetAuthGameMode();
+	AWorld_World* world = gm->gameWorld;
+
+	FIntVector blockPos;
+	blockPos.X = FMath::RoundFromZero((float)(location.X + 25) / 100);
+	blockPos.Y = FMath::RoundFromZero((float)location.Y / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z - 75) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			return false;
+	}
+
+	blockPos.X = FMath::RoundFromZero((float)(location.X - 25) / 100);
+	blockPos.Y = FMath::RoundFromZero((float)location.Y / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z - 75) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			return false;
+	}
+
+	blockPos.X = FMath::RoundFromZero((float)location.X / 100);
+	blockPos.Y = FMath::RoundFromZero((float)(location.Y + 25) / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z - 75) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			return false;
+	}
+
+	blockPos.X = FMath::RoundFromZero((float)location.X / 100);
+	blockPos.Y = FMath::RoundFromZero((float)(location.Y - 25) / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z - 75) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			return false;
+	}
+
+	
+
+	blockPos.X = FMath::RoundFromZero((float)(location.X + 25) / 100);
+	blockPos.Y = FMath::RoundFromZero((float)location.Y / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z + 75) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			return false;
+	}
+
+	blockPos.X = FMath::RoundFromZero((float)(location.X - 25) / 100);
+	blockPos.Y = FMath::RoundFromZero((float)location.Y / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z + 75) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			return false;
+	}
+
+	blockPos.X = FMath::RoundFromZero((float)location.X / 100);
+	blockPos.Y = FMath::RoundFromZero((float)(location.Y + 25) / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z + 75) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			return false;
+	}
+
+	blockPos.X = FMath::RoundFromZero((float)location.X / 100);
+	blockPos.Y = FMath::RoundFromZero((float)(location.Y - 25) / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z + 75) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			return false;
+	}
+
+	return true;
 }
 
 void APawn_Player::MoveY(float input)
@@ -127,6 +201,16 @@ void APawn_Player::LookY(float input)
 void APawn_Player::LookX(float input)
 {
 	playerRotation.Yaw += input * FApp::GetDeltaTime() * 80;
+}
+
+void APawn_Player::JumpPressed()
+{
+	JumpPressedServer();
+}
+
+void APawn_Player::JumpReleased()
+{
+	JumpReleasedServer();
 }
 
 bool APawn_Player::MoveYServer_Validate(float input)
@@ -157,4 +241,36 @@ bool APawn_Player::SetRotation_Validate(FRotator newPlayerRotation)
 void APawn_Player::SetRotation_Implementation(FRotator newPlayerRotation)
 {
 	playerRotation = newPlayerRotation;
+}
+
+bool APawn_Player::JumpPressedServer_Validate()
+{
+	return true;
+}
+
+void APawn_Player::JumpPressedServer_Implementation()
+{
+	AVoxel_VXGIGameModeBase* gm = (AVoxel_VXGIGameModeBase*)GetWorld()->GetAuthGameMode();
+	AWorld_World* world = gm->gameWorld;
+
+	FVector location = GetActorLocation();
+	FIntVector blockPos;
+	blockPos.X = FMath::RoundFromZero((float)location.X / 100);
+	blockPos.Y = FMath::RoundFromZero((float)location.Y / 100);
+	blockPos.Z = FMath::RoundFromZero((float)(location.Z - 100) / 100);
+	if (world->GetBlock(blockPos) != nullptr)
+	{
+		if (world->GetBlock(blockPos)->bHasCollision)
+			playerVelocity.Z = 1000;
+	}
+}
+
+bool APawn_Player::JumpReleasedServer_Validate()
+{
+	return true;
+}
+
+void APawn_Player::JumpReleasedServer_Implementation()
+{
+
 }

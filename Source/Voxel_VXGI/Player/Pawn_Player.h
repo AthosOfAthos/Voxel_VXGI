@@ -26,16 +26,24 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	bool CheckCollision(FVector);
+
 	void MoveY(float);
 	void MoveX(float);
 	void LookY(float);
 	void LookX(float);
+	void JumpPressed();
+	void JumpReleased();
 	UFUNCTION(Server, Reliable, WithValidation)
 	void MoveYServer(float input);
 	UFUNCTION(Server, Reliable, WithValidation)
 	void MoveXServer(float input);
 	UFUNCTION(Server, Reliable, WithValidation)
 	void SetRotation(FRotator newPlayerRotation);
+	UFUNCTION(Server, Reliable, WithValidation)
+	void JumpPressedServer();
+	UFUNCTION(Server, Reliable, WithValidation)
+		void JumpReleasedServer();
 
 	UCapsuleComponent* playerCollision;
 	UCameraComponent* playerCamera;
@@ -46,4 +54,6 @@ public:
 	FVector playerInput;
 	UPROPERTY(Replicated)
 	FVector playerLocation;
+
+	float gravityZ;
 };
