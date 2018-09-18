@@ -97,6 +97,8 @@ void APawn_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &APawn_Player::JumpPressed);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &APawn_Player::JumpReleased);
+	PlayerInputComponent->BindAction("Primary", IE_Pressed, this, &APawn_Player::PrimaryPressed);
+	PlayerInputComponent->BindAction("Primary", IE_Pressed, this, &APawn_Player::PrimaryReleased);
 }
 
 bool APawn_Player::CheckCollision(FVector location)
@@ -213,6 +215,16 @@ void APawn_Player::JumpReleased()
 	JumpReleasedServer();
 }
 
+void APawn_Player::PrimaryPressed()
+{
+
+}
+
+void APawn_Player::PrimaryReleased()
+{
+
+}
+
 bool APawn_Player::MoveYServer_Validate(float input)
 {
 	return true;
@@ -271,6 +283,26 @@ bool APawn_Player::JumpReleasedServer_Validate()
 }
 
 void APawn_Player::JumpReleasedServer_Implementation()
+{
+
+}
+
+bool APawn_Player::PrimaryPressedServer_Validate()
+{
+	return true;
+}
+
+void APawn_Player::PrimaryPressedServer_Implementation()
+{
+	
+}
+
+bool APawn_Player::PrimaryReleasedServer_Validate()
+{
+	return true;
+}
+
+void APawn_Player::PrimaryReleasedServer_Implementation()
 {
 
 }

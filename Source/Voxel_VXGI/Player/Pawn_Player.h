@@ -34,6 +34,8 @@ public:
 	void LookX(float);
 	void JumpPressed();
 	void JumpReleased();
+	void PrimaryPressed();
+	void PrimaryReleased();
 	UFUNCTION(Server, Reliable, WithValidation)
 	void MoveYServer(float input);
 	UFUNCTION(Server, Reliable, WithValidation)
@@ -43,7 +45,11 @@ public:
 	UFUNCTION(Server, Reliable, WithValidation)
 	void JumpPressedServer();
 	UFUNCTION(Server, Reliable, WithValidation)
-		void JumpReleasedServer();
+	void JumpReleasedServer();
+	UFUNCTION(Server, Reliable, WithValidation)
+	void PrimaryPressedServer();
+	UFUNCTION(Server, Reliable, WithValidation)
+	void PrimaryReleasedServer();
 
 	UCapsuleComponent* playerCollision;
 	UCameraComponent* playerCamera;
