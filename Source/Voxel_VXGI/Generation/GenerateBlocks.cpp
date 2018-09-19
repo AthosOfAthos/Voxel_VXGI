@@ -20,7 +20,23 @@ Voxel_Voxel* GenerateBlocks::Gen(FIntVector worldPos)
 			return new Voxel_Glow();
 
 		if (voxel->name == FName(TEXT("stone")))
+		{
+			if (worldPos.Z == -1)
+			{
+				if (world->GetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 2)) == nullptr)
+					return new Voxel_Grass();
+			}
+			else
+			{
+				if (world->GetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 1)) == nullptr)
+					return new Voxel_Grass();
+			}
+
+			
+
 			return new Voxel_Dirt();
+		}
+			
 	}
 		
 
