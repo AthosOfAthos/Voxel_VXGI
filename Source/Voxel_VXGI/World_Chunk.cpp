@@ -45,7 +45,7 @@ AWorld_Chunk::AWorld_Chunk()
 
 void AWorld_Chunk::GetLifetimeReplicatedProps(TArray< FLifetimeProperty > & OutLifetimeProps) const
 {
-	DOREPLIFETIME_CONDITION(AWorld_Chunk, renderData, COND_InitialOnly);
+	DOREPLIFETIME(AWorld_Chunk, renderData);
 }
 
 void AWorld_Chunk::BeginPlay()
