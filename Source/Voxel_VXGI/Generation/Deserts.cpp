@@ -22,3 +22,6 @@ Voxel_Voxel* Deserts::Block(FIntVector pos) {
 	}
 	return nullptr;
 }
+Voxel_Voxel* Deserts::SurfaceBlock(FIntVector pos) {
+	return new Voxel_Sand();
+}

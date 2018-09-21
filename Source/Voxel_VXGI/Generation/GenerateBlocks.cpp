@@ -13,6 +13,7 @@ GenerateBlocks::~GenerateBlocks()
 
 Voxel_Voxel* GenerateBlocks::Gen(FIntVector worldPos)
 {
+	
 	Voxel_Voxel* voxel = world->GetBlock(worldPos);
 	if (voxel != nullptr)
 	{
@@ -21,15 +22,25 @@ Voxel_Voxel* GenerateBlocks::Gen(FIntVector worldPos)
 
 		if (voxel->name == FName(TEXT("stone")))
 		{
-			if (worldPos.Z == -1)
-			{
-				if (world->GetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 2)) == nullptr)
-					return new Voxel_Grass();
-			}
-			else
-			{
-				if (world->GetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 1)) == nullptr)
-					return new Voxel_Grass();
+
+				int b = biome.getBiome(worldPos);
+				switch (b) {
+				case 1:
+					return plain.SurfaceBlock(worldPos);
+					break;
+				case 2:
+					return mountain.SurfaceBlock(worldPos);
+					break;
+				case 3:
+					return swamp.SurfaceBlock(worldPos);
+					break;
+				case 4:
+					return desert.SurfaceBlock(worldPos);
+					break;
+				default:
+					return nullptr;
+					break;
+
 			}
 
 			

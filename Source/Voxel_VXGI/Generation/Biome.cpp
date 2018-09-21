@@ -28,7 +28,7 @@ int Biome::getBiome(FIntVector pos)
 		//surface biomes
 		if (r >0) {
 			if (t > 0) {
-				return 3;//swamp 3
+				return 3;//swamp
 			}
 			else {
 				return 1;//plains

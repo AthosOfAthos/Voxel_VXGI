@@ -21,3 +21,7 @@ Voxel_Voxel* Plains::Block(FIntVector pos) {
 	}
 	return nullptr;
 }
+
+Voxel_Voxel* Plains::SurfaceBlock(FIntVector pos) {
+	return new Voxel_Dirt();
+}
