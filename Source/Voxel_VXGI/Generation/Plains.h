@@ -15,4 +15,5 @@ public:
 	~Plains();
 	FastNoise ground;
 	Voxel_Voxel* Block(FIntVector);
+	Voxel_Voxel* SurfaceBlock(FIntVector);
 };
