@@ -4,6 +4,7 @@
 
 #include "Engine.h"
 #include "UnrealNetwork.h"
+#include "Player/Pawn_Player.h"
 #include "GameFramework/Actor.h"
 #include "Engine/StaticMesh.h"
 #include "Engine/StaticMeshActor.h"
@@ -29,10 +30,12 @@ public:
 
 	bool LoadChunk(FIntVector chunkPos);
 	bool UnloadChunk(FIntVector chunkPos);
+	void ManageChunk();
 	bool NeighborsReady(FIntVector);
 
 	int seed;
 	TArray<UStaticMesh*> renderMesh;
 	TMap<FIntVector, AWorld_Chunk*> chunkMap;
 	TArray<Thread_GenerateBase*> generateBaseThreads;
+	TArray<APawn_Player*> playerPawns;
 };

@@ -55,6 +55,7 @@ bool AVoxel_VXGIGameModeBase::SpawnPlayer(FVector spawnPos, APlayerController* c
 			spawnInfo.Owner = controller;
 			spawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 			APawn* pawn = GetWorld()->SpawnActor<APawn_Player>(spawnPos, FRotator(0, 0, 0), spawnInfo);
+			gameWorld->playerPawns.Add((APawn_Player*)pawn);
 
 			controller->Possess(pawn);
 			return true;
