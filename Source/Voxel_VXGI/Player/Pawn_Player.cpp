@@ -103,6 +103,10 @@ void APawn_Player::SetupPlayerInputComponent(UInputComponent* PlayerInputCompone
 
 bool APawn_Player::CheckCollision(FVector location)
 {
+	/*
+	This can be done better, you know it
+	*/
+
 	AVoxel_VXGIGameModeBase* gm = (AVoxel_VXGIGameModeBase*)GetWorld()->GetAuthGameMode();
 	AWorld_World* world = gm->gameWorld;
 
