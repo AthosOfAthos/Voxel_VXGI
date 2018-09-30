@@ -22,5 +22,5 @@ Voxel_Voxel* Mountains::Block(FIntVector pos) {
 	return nullptr;
 }
 Voxel_Voxel* Mountains::SurfaceBlock(FIntVector pos) {
-	return new Voxel_Stone();
+	return new Voxel_Rubble();
 }

@@ -22,11 +22,26 @@ void GenerateDetails::Gen(FIntVector worldPos)
 		{
 			if (world->GetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 1)) == nullptr && FMath::RandRange(0, 100) > 99)
 			{
+				int height = FMath::RandRange(2, 10);
 				//Setblock actualy works its guaranteed that you have chunks in a 1 block radius loaded
 				//may increase that thou
-				world->SetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 1), new Voxel_Grass);
-				world->SetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 2), new Voxel_Grass);
-				world->SetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 3), new Voxel_Grass);
+				for (int i = -1; i <= 1; i++) {
+					for (int j = -1; j <= 1; j++) {
+						for (int k = -1; k <= height; k++) {
+							world->SetBlock(FIntVector(worldPos.X+i, worldPos.Y+j, worldPos.Z + k), new Voxel_Wood);
+						}
+					}
+				}
+				for (int i = -2; i <= 2; i++) {
+					for (int j = -2; j <= 2; j++) {
+						for (int k = -2; k <= height+1; k++) {
+							if (world->GetBlock(FIntVector(worldPos.X + i, worldPos.Y + j, worldPos.Z + k)) == nullptr) {
+								world->SetBlock(FIntVector(worldPos.X + i, worldPos.Y + j, worldPos.Z + k), new Voxel_Grass);
+							}
+						}
+					}
+				}
+				
 			}
 		}
 	}

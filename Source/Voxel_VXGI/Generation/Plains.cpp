@@ -23,5 +23,5 @@ Voxel_Voxel* Plains::Block(FIntVector pos) {
 }
 
 Voxel_Voxel* Plains::SurfaceBlock(FIntVector pos) {
-	return new Voxel_Dirt();
+	return new Voxel_Grass();
 }

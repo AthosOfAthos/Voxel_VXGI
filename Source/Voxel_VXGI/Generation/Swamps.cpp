@@ -23,5 +23,5 @@ Voxel_Voxel* Swamps::Block(FIntVector pos) {
 	return nullptr;
 }
 Voxel_Voxel* Swamps::SurfaceBlock(FIntVector pos) {
-	return new Voxel_Glow();
+	return new Voxel_Dirt();
 }

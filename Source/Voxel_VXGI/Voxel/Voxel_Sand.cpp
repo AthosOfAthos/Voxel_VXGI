@@ -5,7 +5,7 @@
 Voxel_Sand::Voxel_Sand()
 {
 	name = FName(TEXT("sand"));
-	renderID = 1000;
+	renderID = 1006;
 }
 
 Voxel_Sand::~Voxel_Sand()

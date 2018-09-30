@@ -22,24 +22,27 @@ Voxel_Voxel* GenerateBlocks::Gen(FIntVector worldPos)
 
 		if (voxel->name == FName(TEXT("stone")))
 		{
+				if (world->GetBlock(FIntVector(worldPos.X, worldPos.Y, worldPos.Z + 1)) == nullptr) {
 
-				int b = biome.getBiome(worldPos);
-				switch (b) {
-				case 1:
-					return plain.SurfaceBlock(worldPos);
-					break;
-				case 2:
-					return mountain.SurfaceBlock(worldPos);
-					break;
-				case 3:
-					return swamp.SurfaceBlock(worldPos);
-					break;
-				case 4:
-					return desert.SurfaceBlock(worldPos);
-					break;
-				default:
-					return nullptr;
-					break;
+					int b = biome.getBiome(worldPos);
+					switch (b) {
+					case 1:
+						return plain.SurfaceBlock(worldPos);
+						break;
+					case 2:
+						return mountain.SurfaceBlock(worldPos);
+						break;
+					case 3:
+						return swamp.SurfaceBlock(worldPos);
+						break;
+					case 4:
+						return desert.SurfaceBlock(worldPos);
+						break;
+					default:
+						return nullptr;
+						break;
+
+					}
 
 			}
 

@@ -23,6 +23,7 @@ Voxel_Voxel* GenerateBase::Gen(FIntVector worldPos)
 	Then based on the biome it calls a new biome class with the information
 	*/
 	int b = biome.getBiome(worldPos);
+	b = 1;
 	switch (b) {
 		case 1:
 			return plain.Block(worldPos);

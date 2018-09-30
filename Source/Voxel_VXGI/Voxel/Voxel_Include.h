@@ -7,3 +7,6 @@
 #include "Voxel/Voxel_Stone.h"
 #include "Voxel/Voxel_Empty.h"
 #include "Voxel/Voxel_Sand.h"
+#include "Voxel/Voxel_Rubble.h"
+#include "Voxel/Voxel_Wood.h"
+#include "Voxel/Voxel_Leaf.h"
