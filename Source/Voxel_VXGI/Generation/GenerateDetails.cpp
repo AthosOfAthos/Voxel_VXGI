@@ -34,7 +34,7 @@ void GenerateDetails::Gen(FIntVector worldPos)
 				}
 				for (int i = -2; i <= 2; i++) {
 					for (int j = -2; j <= 2; j++) {
-						for (int k = -2; k <= height+1; k++) {
+						for (int k = height-2; k <= height+1; k++) {
 							if (world->GetBlock(FIntVector(worldPos.X + i, worldPos.Y + j, worldPos.Z + k)) == nullptr) {
 								world->SetBlock(FIntVector(worldPos.X + i, worldPos.Y + j, worldPos.Z + k), new Voxel_Grass);
 							}

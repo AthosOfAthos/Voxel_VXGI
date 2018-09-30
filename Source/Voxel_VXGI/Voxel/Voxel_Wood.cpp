@@ -5,7 +5,7 @@
 Voxel_Wood::Voxel_Wood()
 {
 	name = FName(TEXT("wood"));
-	renderID = 1004;
+	renderID = 1005;
 }
 
 Voxel_Wood::~Voxel_Wood()

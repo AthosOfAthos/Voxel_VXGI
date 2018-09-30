@@ -5,7 +5,7 @@
 Voxel_Leaf::Voxel_Leaf()
 {
 	name = FName(TEXT("rubble"));
-	renderID = 1005;
+	renderID = 1006;
 }
 
 Voxel_Leaf::~Voxel_Leaf()

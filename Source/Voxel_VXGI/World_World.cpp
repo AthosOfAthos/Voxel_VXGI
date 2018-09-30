@@ -13,6 +13,10 @@ AWorld_World::AWorld_World()
 	renderMesh[1000] = LoadObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Stone.Voxel_Stone"));
 	renderMesh[1001] = LoadObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Grass.Voxel_Grass"));
 	renderMesh[1002] = LoadObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Dirt.Voxel_Dirt"));
+	renderMesh[1003] = LoadObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Sand.Voxel_Sand"));
+	renderMesh[1004] = LoadObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Rubble.Voxel_Rubble"));
+	renderMesh[1005] = LoadObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Wood.Voxel_Wood"));
+	renderMesh[1006] = LoadObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Leaf.Voxel_Leaf"));
 	renderMesh[1100] = LoadObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Glow.Voxel_Glow"));
 }
 

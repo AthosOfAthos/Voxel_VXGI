@@ -5,7 +5,7 @@
 Voxel_Rubble::Voxel_Rubble()
 {
 	name = FName(TEXT("rubble"));
-	renderID = 1003;
+	renderID = 1004;
 }
 
 Voxel_Rubble::~Voxel_Rubble()

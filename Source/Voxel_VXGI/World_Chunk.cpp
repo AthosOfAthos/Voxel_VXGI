@@ -36,6 +36,30 @@ AWorld_Chunk::AWorld_Chunk()
 	tmpMesh->SetupAttachment(RootComponent);
 	voxelMesh[1002] = tmpMesh;
 
+	tmpMesh = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("Voxel Sand"));
+	tmpMesh->SetStaticMesh(FindObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Sand.Voxel_Sand")));
+	tmpMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	tmpMesh->SetupAttachment(RootComponent);
+	voxelMesh[1003] = tmpMesh;
+
+	tmpMesh = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("Voxel Rubble"));
+	tmpMesh->SetStaticMesh(FindObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Rubble.Voxel_Rubble")));
+	tmpMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	tmpMesh->SetupAttachment(RootComponent);
+	voxelMesh[1004] = tmpMesh;
+
+	tmpMesh = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("Voxel Wood"));
+	tmpMesh->SetStaticMesh(FindObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Wood.Voxel_Wood")));
+	tmpMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	tmpMesh->SetupAttachment(RootComponent);
+	voxelMesh[1005] = tmpMesh;
+
+	tmpMesh = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("Voxel Leaf"));
+	tmpMesh->SetStaticMesh(FindObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Leaf.Voxel_Leaf")));
+	tmpMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	tmpMesh->SetupAttachment(RootComponent);
+	voxelMesh[1006] = tmpMesh;
+
 	tmpMesh = CreateDefaultSubobject<UInstancedStaticMeshComponent>(TEXT("Voxel Glow"));
 	tmpMesh->SetStaticMesh(FindObject<UStaticMesh>(NULL, TEXT("/Game/Mesh/Voxel/Voxel_Glow.Voxel_Glow")));
 	tmpMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
