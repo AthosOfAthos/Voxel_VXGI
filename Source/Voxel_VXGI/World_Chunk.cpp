@@ -91,6 +91,16 @@ void AWorld_Chunk::BeginPlay()
 			chunkPos.Z++;
 			
 	}
+
+	chunkPos.X = GetActorLocation().X / 1000;
+	if (chunkPos.X >= 0)
+		chunkPos.X++;
+	chunkPos.Y = GetActorLocation().Y / 1000;
+	if (chunkPos.Y >= 0)
+		chunkPos.Y++;
+	chunkPos.Z = GetActorLocation().Z / 1000;
+	if (chunkPos.Z >= 0)
+		chunkPos.Z++;
 }
 
 void AWorld_Chunk::Tick(float DeltaTime)
@@ -139,10 +149,32 @@ void AWorld_Chunk::Tick(float DeltaTime)
 	else
 	{
 		//client logic
-		
+		FVector cameraLocation = FVector(0, 0, 0);
+		if (GEngine)
+			cameraLocation = GEngine->GetFirstLocalPlayerController(GetWorld())->PlayerCameraManager->GetCameraLocation();
+		cameraLocation /= 1000;
+		FVector cameraDistance = FVector(chunkPos.X, chunkPos.Y, chunkPos.Z);
+		cameraDistance = cameraDistance - cameraLocation;
+		if (FMath::Abs(cameraDistance.X) > 4 || FMath::Abs(cameraDistance.Y) > 4 || FMath::Abs(cameraDistance.Z) > 4)
+		{
+			SetVisibility(false);
+		}
+		else
+		{
+			SetVisibility(true);
+		}
 	}
 	//common logic
 	
+}
+
+void AWorld_Chunk::SetVisibility(bool bNewVisibility)
+{
+	if (bNewVisibility != bCurrentVisibility)
+	{
+		bCurrentVisibility = bNewVisibility;
+		this->SetActorHiddenInGame(!bCurrentVisibility);
+	}
 }
 
 Voxel_Voxel* AWorld_Chunk::GetBlock(FIntVector blockPos)

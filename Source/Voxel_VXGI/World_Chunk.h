@@ -25,6 +25,7 @@ protected:
 public:	
 	virtual void Tick(float DeltaTime) override;
 	Voxel_Voxel* GetBlock(FIntVector blockPos);
+	void SetVisibility(bool);
 	void SetBlock(FIntVector blockPos, Voxel_Voxel*);
 	void FindGenerationThread();
 	void GenBlocks();
@@ -36,6 +37,7 @@ public:
 
 	TArray<UInstancedStaticMeshComponent*> voxelMesh;
 
+	bool bCurrentVisibility = true;
 	bool bNeedsGeneration;
 	bool bNeedsBase;
 	bool bHasGenerationThread;
