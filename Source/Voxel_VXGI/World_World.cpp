@@ -119,6 +119,17 @@ bool AWorld_World::LoadChunk(FIntVector chunkPos)
 
 bool AWorld_World::UnloadChunk(FIntVector chunkPos)
 {
+	if (HasAuthority() && chunkMap.Contains(chunkPos))
+	{
+		if (chunkMap[chunkPos] != nullptr)
+		{
+			//todo save chunk
+			chunkMap[chunkPos]->Destroy();
+			chunkMap.Remove(chunkPos);
+			return true;
+		}
+	}
+
 	return false;
 }
 
