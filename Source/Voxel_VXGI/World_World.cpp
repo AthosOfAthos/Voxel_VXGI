@@ -123,10 +123,13 @@ bool AWorld_World::UnloadChunk(FIntVector chunkPos)
 	{
 		if (chunkMap[chunkPos] != nullptr)
 		{
-			//todo save chunk
-			chunkMap[chunkPos]->Destroy();
-			chunkMap.Remove(chunkPos);
-			return true;
+			if (!chunkMap[chunkPos]->bNeedsGeneration)
+			{
+				//TODO: save chunk
+				chunkMap[chunkPos]->Destroy();
+				chunkMap.Remove(chunkPos);
+				return true;
+			}
 		}
 	}
 
@@ -135,6 +138,8 @@ bool AWorld_World::UnloadChunk(FIntVector chunkPos)
 
 void AWorld_World::ManageChunk()
 {
+	int viewRadius = 4;
+	int cullRadius = 5;
 	int numPlayers = playerPawns.Num();
 	for (int i = 0; i < numPlayers; i++)
 	{
@@ -145,16 +150,46 @@ void AWorld_World::ManageChunk()
 			chunkPos.Y = FMath::RoundFromZero((float)playerPawns[i]->GetActorLocation().Y / 1000);
 			chunkPos.Z = FMath::RoundFromZero((float)playerPawns[i]->GetActorLocation().Z / 1000);
 
-			for (int chunkX = chunkPos.X - 5; chunkX < chunkPos.X + 5; chunkX++)
+			for (int chunkX = chunkPos.X - viewRadius; chunkX < chunkPos.X + viewRadius; chunkX++)
 			{
-				for (int chunkY = chunkPos.Y - 5; chunkY < chunkPos.Y + 5; chunkY++)
+				for (int chunkY = chunkPos.Y - viewRadius; chunkY < chunkPos.Y + viewRadius; chunkY++)
 				{
-					for (int chunkZ = chunkPos.Z - 5; chunkZ < chunkPos.Z + 5; chunkZ++)
+					for (int chunkZ = chunkPos.Z - viewRadius; chunkZ < chunkPos.Z + viewRadius; chunkZ++)
 					{
 						LoadChunk(FIntVector(chunkX, chunkY, chunkZ));
 					}
 				}
 			}
+		}
+	}
+
+	TArray<FIntVector> chunkKeys;
+	chunkMap.GetKeys(chunkKeys);
+	for (int i = 0; i < chunkKeys.Num(); i++)
+	{
+		bool bNeedsCull = true;
+
+		for (int x = 0; x < playerPawns.Num(); x++)
+		{
+			if (playerPawns[x] != nullptr)
+			{
+				FIntVector playerPos;
+				playerPos.X = FMath::RoundFromZero((float)playerPawns[x]->GetActorLocation().X / 1000);
+				playerPos.Y = FMath::RoundFromZero((float)playerPawns[x]->GetActorLocation().Y / 1000);
+				playerPos.Z = FMath::RoundFromZero((float)playerPawns[x]->GetActorLocation().Z / 1000);
+				playerPos = playerPos - chunkKeys[i];
+				if (FMath::Abs(playerPos.X) < cullRadius && FMath::Abs(playerPos.Y) < cullRadius && FMath::Abs(playerPos.Z) < cullRadius)
+				{
+					bNeedsCull = false;
+				}
+			}
+		}
+		if (playerPawns.Num() == 0)
+			bNeedsCull = false;
+
+		if (bNeedsCull)
+		{
+			UnloadChunk(chunkKeys[i]);
 		}
 	}
 }
